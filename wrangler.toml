@@ -5,6 +5,6 @@ compatibility_date = "2025-12-27"
 # Bind your KV namespace here. Replace the id with your KV namespace id.
 [[kv_namespaces]]
 binding = "UNCIV_KV"
-id = "025f7963c8e64deea4718571a705876f"
+id = "a5ec58f5b03e4e40b9093e8b24ff78fb"
 
 # Example routes, account, etc. add as necessary for your project
