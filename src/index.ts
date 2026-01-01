@@ -226,7 +226,20 @@ export default {
         if (existing === null) return new Response("File does not exist", { status: 404 });
         const allowed = await validateAuth(env, userId, password);
         if (!allowed) return new Response("Unauthorized", { status: 401 });
-        return new Response(existing, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+
+        const encoder = new TextEncoder();
+        const compressed = new CompressionStream("gzip");
+        const writer = compressed.writable.getWriter();
+        writer.write(encoder.encode(existing));
+        writer.close();
+
+        return new Response(compressed.readable, {
+          status: 200,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Content-Encoding": "gzip",
+          },
+        });
       }
 
       return new Response("Method not allowed", { status: 405 });
